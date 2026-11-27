@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>GAMEZONE 3D — Ultimate Gaming Platform</title>
+  <meta name="description" content="Ultra Premium Futuristic 3D Gaming Platform with 24 fully playable mini-games, cyberpunk glassmorphism, Three.js 3D graphics, multilingual support, and real-time audio!">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮</text></svg>">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Three.js 3D WebGL Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+  <!-- Custom Gaming Neon Cursor -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <!-- Ambient Cyberpunk Background Glows -->
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
+
+  <!-- ==================== NAVBAR ==================== -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <!-- Brand Logo -->
+      <a class="nav-logo" href="#home" onclick="filterCategory('all')">
+        <div class="logo-icon-box">🎮</div>
+        <div class="logo-text">
+          GAME<span>ZONE</span>
+          <span class="logo-badge-3d">3D</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Menu -->
+      <nav>
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="#home" class="nav-link active" data-cat="all" data-i18n="nav_home">ASOSIY</a></li>
+          <li><a href="#games" class="nav-link" data-cat="all" data-i18n="nav_all">BARCHA O‘YINLAR</a></li>
+          <li><a href="#games" class="nav-link" data-cat="shooter" data-i18n="nav_shooter">SHOOTER</a></li>
+          <li><a href="#games" class="nav-link" data-cat="rpg" data-i18n="nav_rpg">RPG JANG</a></li>
+          <li><a href="#games" class="nav-link" data-cat="racing" data-i18n="nav_racing">POYGA</a></li>
+          <li><a href="#games" class="nav-link" data-cat="puzzle" data-i18n="nav_puzzle">BOSHQOTIRMA</a></li>
+          <li><a href="#games" class="nav-link" data-cat="travel" data-i18n="nav_travel">SAYOHAT</a></li>
+          <li><a href="#games" class="nav-link" data-cat="favorites" data-i18n="nav_favorites">SEVIMLILAR</a></li>
+        </ul>
+      </nav>
+
+      <!-- Right Nav Actions -->
+      <div class="nav-actions">
+        <!-- Sound FX / Music Toggle -->
+        <button class="nav-btn active-state" id="sound-toggle-btn" title="Sound Effects & Ambient Synth">
+          🔊
+        </button>
+
+        <!-- Dark / Light Mode Switcher -->
+        <button class="nav-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Switch Theme">
+          <span id="theme-icon">🌙</span>
+        </button>
+
+        <!-- Language Selector -->
+        <div class="lang-select-wrapper">
+          <button class="nav-btn lang-btn" id="lang-btn">
+            🌐 <span id="current-lang-text">UZ</span>
+          </button>
+          <div class="lang-dropdown" id="lang-dropdown">
+            <button class="lang-opt" onclick="setLanguage('uz')">🇺🇿 O‘zbekcha</button>
+            <button class="lang-opt" onclick="setLanguage('en')">🇬🇧 English</button>
+            <button class="lang-opt" onclick="setLanguage('ru')">🇷🇺 Русский</button>
+          </div>
+        </div>
+
+        <!-- User Profile Badge -->
+        <div class="user-profile-badge" onclick="openProfileModal()" title="View Gamer Profile">
+          <div class="avatar-mini" id="nav-avatar-mini">⚡</div>
+          <span class="level-tag" id="nav-profile-level">LVL 3</span>
+        </div>
+
+        <!-- Mobile Hamburger Toggle -->
+        <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle Navigation">
+          ☰
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <section class="hero-section" id="home">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-overlay-grid"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge-tag" data-i18n="hero_badge">PREMIUM GAMING PLATFORMA 3D</div>
+      <h1 class="hero-title">
+        <span data-i18n="hero_title">O‘YINLAR DUNYOSIGA</span><br>
+        <span class="glow-gradient" data-i18n="hero_title_highlight">XUSH KELIBSIZ</span>
+      </h1>
+      <p class="hero-subtitle" data-i18n="hero_sub">
+        24 ta haqiqiy o‘ynaladigan futuristik 3D mini-o‘yinlar, kiberpank atmosfera va yuqori darajadagi tajriba!
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#games" class="btn-primary" onclick="filterCategory('all')">
+          <span>⚡</span> <span data-i18n="btn_play_now">HOZIR O‘YNASH</span>
+        </a>
+        <a href="#games" class="btn-secondary" onclick="filterCategory('trending')">
+          <span>🔥</span> <span data-i18n="btn_trending">TOP O‘YINLAR</span>
+        </a>
+      </div>
+
+      <!-- Live Platform Stats -->
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-number">24</span>
+          <span class="stat-label" data-i18n="stat_games">HAQIQIY O‘YINLAR</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-number">100K+</span>
+          <span class="stat-label" data-i18n="stat_players">FAOL O‘YINCHILAR</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-number">4.9 ★</span>
+          <span class="stat-label" data-i18n="stat_rating">REYTING</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-number">0ms</span>
+          <span class="stat-label" data-i18n="stat_latency">KECHIKISH</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SEARCH & FILTERS BAR ==================== -->
+  <section class="filter-section">
+    <div class="filter-container">
+      <!-- Category Pills -->
+      <div class="category-pills">
+        <button class="cat-pill active" data-cat="all" data-i18n="cat_all">Barchasi</button>
+        <button class="cat-pill" data-cat="trending" data-i18n="cat_trending">Trendda</button>
+        <button class="cat-pill" data-cat="shooter" data-i18n="cat_shooter">Shooter</button>
+        <button class="cat-pill" data-cat="rpg" data-i18n="cat_rpg">RPG</button>
+        <button class="cat-pill" data-cat="racing" data-i18n="cat_racing">Poyga</button>
+        <button class="cat-pill" data-cat="puzzle" data-i18n="cat_puzzle">Boshqotirma</button>
+        <button class="cat-pill" data-cat="travel" data-i18n="cat_travel">Sayohat</button>
+        <button class="cat-pill" data-cat="favorites" data-i18n="cat_favorites">Sevimlilar</button>
+      </div>
+
+      <!-- Real-Time Search Box -->
+      <div class="search-box-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="game-search-input" class="search-input" placeholder="O‘yin nomi yoki kalit so‘zni qidiring..." autocomplete="off">
+        <button class="search-clear-btn" id="search-clear" title="Clear">✕</button>
+      </div>
+
+      <!-- Sort Dropdown -->
+      <div class="sort-select-wrapper">
+        <select id="sort-select" class="sort-select">
+          <option value="popular" data-i18n="sort_popular">Eng ommabop</option>
+          <option value="rating" data-i18n="sort_rating">Yuqori reyting</option>
+          <option value="name" data-i18n="sort_name">Nomi bo‘yicha (A-Z)</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== GAMES CATALOG SECTION ==================== -->
+  <main class="games-section" id="games">
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <span class="section-tag" data-i18n="section_tag">ULTRA GAMING KATALOG</span>
+        <h2 class="section-title">
+          <span data-i18n="section_all_games">Barcha O‘yinlar</span>
+          <span class="games-count-badge" id="games-count-badge">(24)</span>
+        </h2>
+      </div>
+    </div>
+
+    <!-- 3D Cards Grid -->
+    <div class="games-grid" id="games-grid">
+      <!-- Dynamically Rendered by script.js -->
+    </div>
+  </main>
+
+  <!-- ==================== UNIVERSAL GAME PLAYER MODAL ==================== -->
+  <div class="game-modal-overlay" id="game-modal">
+    <div class="game-modal-container">
+      <!-- HUD Top Bar -->
+      <div class="game-modal-header">
+        <div class="modal-game-info">
+          <h2 class="modal-game-title" id="modal-title">Game Title</h2>
+          <span class="modal-game-cat" id="modal-cat-tag">SHOOTER</span>
+        </div>
+
+        <!-- Live Metrics HUD -->
+        <div class="modal-hud-metrics">
+          <div class="hud-metric-box">
+            <span class="hud-label" data-i18n="modal_score">BALL:</span>
+            <span class="hud-val" id="hud-score-val">0</span>
+          </div>
+
+          <div class="hud-metric-box">
+            <span class="hud-label" data-i18n="modal_level">BOSQICH:</span>
+            <span class="hud-val" id="hud-level-val">1</span>
+          </div>
+
+          <div class="hud-metric-box">
+            <span class="hud-label" data-i18n="modal_time">VAQT:</span>
+            <span class="hud-val" id="hud-time-val">0s</span>
+          </div>
+
+          <div class="hud-metric-box">
+            <span class="hud-label" data-i18n="modal_health">JON:</span>
+            <div class="hud-health-bar-wrap">
+              <div class="hud-health-fill" id="hud-health-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HUD Action Buttons -->
+        <div class="modal-hud-actions">
+          <button class="hud-btn" onclick="pauseActiveGame()" title="Pause">⏸</button>
+          <button class="hud-btn" onclick="resumeActiveGame()" title="Resume">▶</button>
+          <button class="hud-btn" onclick="restartActiveGame()" title="Restart">🔄</button>
+          <button class="hud-btn" onclick="toggleGameFullscreen()" title="Fullscreen">⛶</button>
+          <button class="hud-btn hud-btn-close" onclick="closeGameModal()" title="Exit">✕</button>
+        </div>
+      </div>
+
+      <!-- Game Stage Viewport -->
+      <div class="game-viewport">
+        <div id="active-game-container">
+          <!-- Game Canvas injected here -->
+        </div>
+
+        <!-- Mobile Touch Virtual Controls Overlay -->
+        <div class="touch-controls-overlay" id="touch-controls">
+          <div class="touch-dpad">
+            <div></div>
+            <div class="touch-btn" data-action="up">▲</div>
+            <div></div>
+            <div class="touch-btn" data-action="left">◀</div>
+            <div></div>
+            <div class="touch-btn" data-action="right">▶</div>
+            <div></div>
+            <div class="touch-btn" data-action="down">▼</div>
+            <div></div>
+          </div>
+
+          <div class="touch-actions">
+            <div class="touch-action-btn" data-action="action1">A</div>
+            <div class="touch-action-btn" data-action="action2">B</div>
+          </div>
+        </div>
+
+        <!-- Game Over / Victory Overlay -->
+        <div class="game-end-overlay" id="game-end-overlay">
+          <h2 class="game-end-title" id="end-title">GAME OVER</h2>
+          <div class="game-end-score-box">
+            <span class="end-score-label">FINAL SCORE</span>
+            <span class="end-score-val" id="end-score-val">0</span>
+          </div>
+          <div class="game-end-actions">
+            <button class="btn-primary" onclick="restartActiveGame()">
+              <span>🔄</span> <span data-i18n="btn_replay">QAYTA O‘YNASH</span>
+            </button>
+            <button class="btn-secondary" onclick="closeGameModal()">
+              <span>✕</span> <span data-i18n="btn_exit">CHIQISH</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls Hint Footer -->
+      <div class="game-modal-footer">
+        <div class="controls-hint-list" id="modal-controls-hint">
+          <span class="control-badge">⌨️ WASD / Arrows to Move</span>
+        </div>
+        <div>GAMEZONE 3D PRO HUD</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== USER PROFILE MODAL ==================== -->
+  <div class="user-modal-overlay" id="user-profile-modal">
+    <div class="user-modal-box">
+      <div class="user-modal-header">
+        <h2 class="user-modal-title" data-i18n="profile_title">GAMER PROFILI</h2>
+        <button class="hud-btn hud-btn-close" onclick="closeProfileModal()">✕</button>
+      </div>
+
+      <div class="profile-card-top">
+        <div class="profile-avatar-big" id="prof-avatar-big">⚡</div>
+        <div class="profile-info-wrap">
+          <h3 class="profile-username" id="prof-username">CyberGamer_01</h3>
+          <div class="level-tag" id="prof-level">LEVEL 3</div>
+          <div class="profile-xp-bar-wrap">
+            <div class="profile-xp-fill" id="prof-xp-fill"></div>
+          </div>
+          <div style="font-size: 0.8rem; color: #94a3b8;" data-i18n="profile_xp">Tajriba (XP)</div>
+        </div>
+      </div>
+
+      <div class="profile-stats-grid">
+        <div class="profile-stat-tile">
+          <div class="profile-stat-num" id="prof-plays">14</div>
+          <div class="profile-stat-lbl" data-i18n="stat_played">O‘ynalgan</div>
+        </div>
+        <div class="profile-stat-tile">
+          <div class="profile-stat-num" id="prof-time">20m</div>
+          <div class="profile-stat-lbl" data-i18n="stat_time">O‘yin vaqti</div>
+        </div>
+        <div class="profile-stat-tile">
+          <div class="profile-stat-num" id="prof-favs">4</div>
+          <div class="profile-stat-lbl" data-i18n="stat_favs">Sevimlilar</div>
+        </div>
+      </div>
+
+      <div class="achievements-box">
+        <div class="achievements-title" data-i18n="achievements_title">YUTUQLAR & MEDALLAR</div>
+        <div class="achievements-grid">
+          <div class="achievement-badge unlocked">
+            <span class="ach-icon">🏆</span>
+            <span class="ach-name">First Blood</span>
+          </div>
+          <div class="achievement-badge unlocked">
+            <span class="ach-icon">⚡</span>
+            <span class="ach-name">Speed Demon</span>
+          </div>
+          <div class="achievement-badge unlocked">
+            <span class="ach-icon">🧩</span>
+            <span class="ach-name">Puzzle Ace</span>
+          </div>
+          <div class="achievement-badge">
+            <span class="ach-icon">👑</span>
+            <span class="ach-name">Legendary</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-about">
+        <a class="nav-logo" href="#home">
+          <div class="logo-icon-box">🎮</div>
+          <div class="logo-text">GAME<span>ZONE</span> <span class="logo-badge-3d">3D</span></div>
+        </a>
+        <p class="footer-text" data-i18n="footer_about">
+          GAMEZONE 3D — zamonaviy WebGL va Three.js texnologiyalari bilan yaratilgan dunyo darajasidagi eng chiroyli onlayn 3D gaming platformasi.
+        </p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn" title="Discord">💬</a>
+          <a href="#" class="social-btn" title="Telegram">✈️</a>
+          <a href="#" class="social-btn" title="GitHub">🐙</a>
+          <a href="#" class="social-btn" title="Twitter/X">🐦</a>
+          <a href="#" class="social-btn" title="YouTube">📺</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title" data-i18n="footer_categories">Kategoriyalar</h4>
+        <ul class="footer-links">
+          <li><a href="#games" class="footer-link" onclick="filterCategory('shooter')">Shooter Games</a></li>
+          <li><a href="#games" class="footer-link" onclick="filterCategory('rpg')">RPG Battles</a></li>
+          <li><a href="#games" class="footer-link" onclick="filterCategory('racing')">Car Racing 3D</a></li>
+          <li><a href="#games" class="footer-link" onclick="filterCategory('puzzle')">Brain & Logic</a></li>
+          <li><a href="#games" class="footer-link" onclick="filterCategory('travel')">Travel & Explore</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title" data-i18n="footer_links">Havolalar</h4>
+        <ul class="footer-links">
+          <li><a href="#home" class="footer-link">Home</a></li>
+          <li><a href="#games" class="footer-link">Trending Games</a></li>
+          <li><a href="#" class="footer-link" onclick="openProfileModal()">Gamer Profile</a></li>
+          <li><a href="#games" class="footer-link" onclick="filterCategory('favorites')">Favorite List</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title" data-i18n="footer_legal">Qoidalar</h4>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Privacy Policy</a></li>
+          <li><a href="#" class="footer-link">Terms of Service</a></li>
+          <li><a href="#" class="footer-link">Cookie Settings</a></li>
+          <li><a href="#" class="footer-link">Support & Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 GAMEZONE 3D. All Rights Reserved. Crafted with Next-Gen Web Technologies.</div>
+      <button class="back-to-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        ↑ <span data-i18n="back_to_top">Yuqoriga qaytish</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <!-- Vector Game Posters Generator -->
+  <script src="assets/images/game-posters.js"></script>
+
+  <!-- 24 Playable Game Engines -->
+  <!-- Shooter -->
+  <script src="games/shooter/space-shooter.js"></script>
+  <script src="games/shooter/zombie-survival.js"></script>
+  <script src="games/shooter/target-shooter-3d.js"></script>
+  <script src="games/shooter/tank-battle.js"></script>
+  <script src="games/shooter/alien-attack.js"></script>
+
+  <!-- RPG -->
+  <script src="games/rpg/fantasy-adventure.js"></script>
+  <script src="games/rpg/dungeon-quest.js"></script>
+  <script src="games/rpg/pixel-hero.js"></script>
+  <script src="games/rpg/dragon-world.js"></script>
+
+  <!-- Racing -->
+  <script src="games/racing/city-driving-3d.js"></script>
+  <script src="games/racing/highway-racing.js"></script>
+  <script src="games/racing/drift-master.js"></script>
+  <script src="games/racing/offroad-adventure.js"></script>
+  <script src="games/racing/parking-challenge.js"></script>
+
+  <!-- Puzzle -->
+  <script src="games/puzzle/tetris.js"></script>
+  <script src="games/puzzle/xo-battle.js"></script>
+  <script src="games/puzzle/block-blast.js"></script>
+  <script src="games/puzzle/memory-cards.js"></script>
+  <script src="games/puzzle/sudoku-master.js"></script>
+  <script src="games/puzzle/bubble-shooter.js"></script>
+
+  <!-- Travel -->
+  <script src="games/travel/world-explorer-3d.js"></script>
+  <script src="games/travel/island-adventure.js"></script>
+  <script src="games/travel/mountain-climber.js"></script>
+  <script src="games/travel/airport-tycoon.js"></script>
+
+  <!-- Core Platform Orchestrator -->
+  <script src="script.js"></script>
+</body>
+</html>
